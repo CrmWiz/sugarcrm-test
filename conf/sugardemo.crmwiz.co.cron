@@ -1,0 +1,18 @@
+# cron generated 2019/01/07 15:36:11
+# See "man -a crontab" to have an explanation of the fields
+# Be sure that your cron doesn't output anything, but instead sends reports/error logs in an email
+#
+# Note: Your cron file, once enabled MUST be owned by "root". If not, the cron will refuse to execute it.
+# To fix the issue, simply disable and enable again the cron for your website.
+# If you ned to modify your cron after enabling it, disable it before and the do your changes. When done,
+# simply enable it again.
+
+# m h dom m dow user command
+#*/15 *	* * *	kedar	/usr/bin/php /home/websites/sugardemo.crmwiz.co/wwwroot/anycronscript.php "an argument" "another one" >/dev/null 2>&1
+#*/15 *	* * *	kedar	cd /home/websites/sugardemo.crmwiz.co/wwwroot && /usr/bin/nice --adjustment=10 /usr/bin/php --file /home/websites/sugardemo.crmwiz.co/wwwroot/cron.php >/dev/null 2>&1
+
+# if you have git-auto-commit ready (website-add -T (1))
+# update the parameters and uncomment the next line. see git-auto-commit(1)
+#45 0	* * *	kedar	/usr/bin/dbversion --webapp=sugar --schema --webdir=/home/websites/sugardemo.crmwiz.co "sugardemo.crmwiz.co"
+#50 0   * * *   kedar	cd /home/websites/sugardemo.crmwiz.co/deploy && /usr/bin/nice --adjustment=10 /usr/bin/php --file /home/websites/sugardemo.crmwiz.co/deploy/dbautocommit.php >/dev/null 2>&1
+#0  */1	* * *	kedar	/usr/bin/git-auto-commit -b next -d /home/websites/sugardemo.crmwiz.co -i /home/websites/sugardemo.crmwiz.co/conf/sugardemo.crmwiz.co.id_rsa -h "sugardemo.crmwiz.co" -p

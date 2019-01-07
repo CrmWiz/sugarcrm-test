@@ -1,0 +1,77 @@
+# START: sugardemo.crmwiz.co
+# Declaration for virtualhost sugardemo.crmwiz.co
+# Created : 2019/01/07 15:36:11
+<VirtualHost  *:80>
+	ServerName sugardemo.crmwiz.co
+	ServerAlias sugardemo.crmwiz.co
+	DocumentRoot /home/websites/sugardemo.crmwiz.co/wwwroot
+
+	<IfModule mpm_itk_module>
+		AssignUserID	kedar root
+	</IfModule>
+
+	<IfModule mod_rewrite.c>
+		# these are security settings. DO NOT CHANGE THEM unless you are an experienced user.
+		RewriteEngine On
+		#RewriteLogLevel 0
+		RewriteRule ^(.*/)?\.svn/ - [F]
+		RewriteRule ^(.*/)?\.git/ - [F]
+		RewriteRule ^(.*/)?\.bzr/ - [F]
+		RewriteRule ^(.*/)?\.gitignore - [F]
+	</IfModule>
+
+	<Directory "/home/websites/sugardemo.crmwiz.co">
+		# these are security settings. DO NOT CHANGE THEM unless you are an experienced user.
+		<Limit CONNECT OPTIONS PATCH PROPFIND PROPPATCH MKCOL COPY MOVE LOCK UNLOCK>
+			Order deny,allow
+			Deny from all
+			Require all denied
+		</Limit>
+		DirectoryIndex index.html index.htm index.php
+		Options None +FollowSymLinks
+		AllowOverride All
+		Order allow,deny
+		Allow from all
+		Require all granted
+	</Directory>
+
+	<IfModule mod_headers.c>
+		<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf|xml|txt)$">
+			Header set Cache-Control max-age=86400,public
+		</FilesMatch>
+	</IfModule>
+	<IfModule mod_expires.c>
+		ExpiresActive On
+		ExpiresByType image/png "access plus 86400 seconds"
+		ExpiresByType image/jpeg "access plus 86400 seconds"
+		ExpiresByType image/gif "access plus 86400 seconds"
+		ExpiresByType text/css "access plus 86400 seconds"
+		ExpiresByType application/javascript "access plus 86400 seconds"
+		ExpiresByType application/x-javascript "access plus 86400 seconds"
+	</IfModule>
+
+	ErrorLog /home/websites/sugardemo.crmwiz.co/logs/error.log
+	CustomLog /home/websites/sugardemo.crmwiz.co/logs/access.log combined
+
+	# these are security settings. DO NOT CHANGE THEM unless you are an experienced user.
+	php_admin_value open_basedir "/home/websites/sugardemo.crmwiz.co:/tmp:/usr/share/php"
+	php_admin_value upload_tmp_dir "/tmp"
+	php_value include_path "./:/home/websites/sugardemo.crmwiz.co/wwwroot:/home/websites/sugardemo.crmwiz.co"
+	php_admin_flag  allow_url_fopen "Off"
+	php_admin_flag	allow_url_include "Off"
+	php_admin_value memory_limit "256M"
+	php_admin_value upload_max_filesize "64M"
+	php_admin_value post_max_size "64M"
+	php_admin_flag expose_php "Off"
+	php_admin_value suhosin.request.max_vars "500"
+	php_admin_value suhosin.post.max_vars "500"
+	php_admin_value date.timezone "Australia/Sydney"
+	php_admin_flag display_errors "Off"
+	php_admin_flag log_errors "On"
+	
+	php_admin_flag display_errors "Off"
+	
+</Virtualhost>
+# End of declaration for virtualhost sugardemo.crmwiz.co
+# STOP: sugardemo.crmwiz.co
+# vim: set ft=apache :

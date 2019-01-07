@@ -1,0 +1,15 @@
+# Apache2 logrotate snipet 
+# logrotate created on 2019/01/07 15:36:11
+#
+/home/websites/sugardemo.crmwiz.co/logs/error.log /home/websites/sugardemo.crmwiz.co/logs/access.log {
+	missingok
+	notifempty
+	copytruncate
+	daily
+	compress
+	rotate 3
+	sharedscripts
+	postrotate
+		/etc/init.d/apache2 reload > /dev/null 2>&1 || true
+	endscript
+}
